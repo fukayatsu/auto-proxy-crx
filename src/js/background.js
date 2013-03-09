@@ -4,11 +4,18 @@
 
     var pageUrl = details['url'];
     var proxySetting = proxy.getSettingForUrl(pageUrl);
-    if (!proxySetting) { return; }
+    if (proxySetting) {
+      chrome.proxy.settings.set(proxySetting, function() {
+        // console.log('applied');
+      });
+    } else {
+      proxySetting = proxy.getSettingForName("system");
+      chrome.proxy.settings.set(proxySetting, function() {
+        // console.log('system');
+      });
+    }
 
-    chrome.proxy.settings.set(proxySetting, function() {
-      console.log('applied');
-    });
+
 
   });
 })();
