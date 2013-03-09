@@ -1,4 +1,11 @@
 var proxy = {
+  setBadgeForUrl: function(url) {
+    var label = this.getSettingNameForUrl(url);
+    if (label == "system") label = "";
+
+    chrome.browserAction.setBadgeBackgroundColor({color:[50, 110, 70, 255]});
+    chrome.browserAction.setBadgeText({text:label.slice(0, 4)});
+  },
   setSetting: function(setting, callback) {
     chrome.proxy.settings.set(setting, function() {
       callback();

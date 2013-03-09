@@ -7,11 +7,13 @@
     var proxySetting = proxy.getSettingForName(proxyName);
 
     proxy.setSetting(proxySetting, function() {
-      var label = proxyName;
-      if (label == "system") label = "";
+      proxy.setBadgeForUrl(pageUrl);
+    });
+  });
 
-      chrome.browserAction.setBadgeBackgroundColor({color:[50, 110, 70, 255]});
-      chrome.browserAction.setBadgeText({text:label.slice(0, 4)});
+  chrome.tabs.onActivated.addListener(function(info) {
+    chrome.tabs.get(info.tabId, function(tab) {
+      proxy.setBadgeForUrl(tab.url);
     });
   });
 })();
