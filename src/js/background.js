@@ -6,18 +6,7 @@
     var proxySetting = proxy.getSettingForUrl(pageUrl);
     if (!proxySetting) { return; }
 
-    chrome.proxy.settings.set({
-      value: {
-        "mode": "fixed_servers",
-        "rules": {
-          "singleProxy": {
-            "host": proxySetting.host,
-            "port": proxySetting.port
-          }
-        }
-      },
-      "scope": "regular"
-    }, function() {
+    chrome.proxy.settings.set(proxySetting, function() {
       console.log('applied');
     });
 

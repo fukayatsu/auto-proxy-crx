@@ -11,13 +11,26 @@ var proxy = {
     return null;
   },
   getSettingForName: function(name) {
-    // if (name === "direct") {
-    //   return null;
-    // } else if (name === "system") {
-    //   return null;
-    // }
+    var setting = {
+      scope: "regular"
+    };
 
-    var setting = JSON.parse(localStorage['setting']);
-    return setting[name];
+    if (name === "direct" || name === "system") {
+      setting['value'] = { mode: name };
+      return setting;
+    }
+
+    var proxySetting = JSON.parse(localStorage['setting'])[name];
+    setting['value'] = {
+      mode: "fixed_servers",
+      rules: {
+        singleProxy: {
+          host: proxySetting.host,
+          port: proxySetting.port
+        }
+      }
+    };
+
+    return setting;
   }
 };
