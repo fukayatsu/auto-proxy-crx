@@ -1,6 +1,11 @@
 $(function(){
   var setting = localStorage.getItem("setting");
-  if (!setting) { return; }
+  if (!setting) {
+    setting   = '{\n\t"example":{\n\t\t"host": "proxy.example.com",\n\t\t"port": 3128,\n\t\t"targets": [\n\t\t\t"http://target.example.com",\n\t\t\t"https://target2.example.com/foo/bar"\n\t\t]\n\t}\n}';
+    var targetMap = '{"http://target.example.com":"example","https://target2.example.com/foo/bar":"example"}';
+    localStorage.setItem('setting',   setting);
+    localStorage.setItem('targetMap', targetMap);
+  }
 
   $("#inputSetting").val(setting);
 });
