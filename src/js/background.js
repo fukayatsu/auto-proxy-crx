@@ -3,19 +3,15 @@
     if (details['parentFrameId'] != -1) { return ; }
 
     var pageUrl = details['url'];
-    var proxySetting = proxy.getSettingForUrl(pageUrl);
-    if (proxySetting) {
-      chrome.proxy.settings.set(proxySetting, function() {
-        // console.log('applied');
-      });
-    } else {
-      proxySetting = proxy.getSettingForName("system");
-      chrome.proxy.settings.set(proxySetting, function() {
-        // console.log('system');
-      });
-    }
+    var proxyName    = proxy.getSettingNameForUrl(pageUrl);
+    var proxySetting = proxy.getSettingForName(proxyName);
 
+    proxy.setSetting(proxySetting, function() {
+      var label = proxyName;
+      if (label == "system") label = "";
 
-
+      chrome.browserAction.setBadgeBackgroundColor({color:[50, 110, 70, 255]});
+      chrome.browserAction.setBadgeText({text:label.slice(0, 4)});
+    });
   });
 })();

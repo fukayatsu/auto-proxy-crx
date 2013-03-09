@@ -1,14 +1,19 @@
 var proxy = {
-  getSettingForUrl: function(url) {
+  setSetting: function(setting, callback) {
+    chrome.proxy.settings.set(setting, function() {
+      callback();
+    });
+  },
+  getSettingNameForUrl: function(url) {
     targetMap = JSON.parse(localStorage['targetMap']);
 
     for(var target in targetMap) {
       if (url.match(target)) {
-        var name = targetMap[target];
-        return this.getSettingForName(name);
+        return targetMap[target];
       }
     }
-    return null;
+
+    return "system";
   },
   getSettingForName: function(name) {
     var setting = {
