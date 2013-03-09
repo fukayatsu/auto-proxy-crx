@@ -14,13 +14,27 @@ $("#inputSetting").on('keydown', function(e){
 
 $("#save").on('click', function(){
   var inputSetting = $("#inputSetting").val();
+  var setting = {};
+  var targetMap = {};
+  var targetMapJson = "";
+
   try {
-    JSON.parse(inputSetting);
+    setting = JSON.parse(inputSetting);
+    for (var key in setting) {
+      var targets = setting[key].targets;
+      for (var i = 0; i < targets.length; i++) {
+        targetMap[targets[i]] = key;
+      }
+    }
+    targetMapJson = JSON.stringify(targetMap);
   } catch(e) {
     alert("invalid json?");
     return ;
   }
+
   localStorage.setItem("setting", inputSetting);
+  localStorage.setItem("targetMap", targetMapJson);
+
   alert("saved.");
 });
 
