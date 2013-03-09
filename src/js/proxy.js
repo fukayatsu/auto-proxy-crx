@@ -12,7 +12,7 @@ var proxy = {
     });
   },
   getSettingNameForUrl: function(url) {
-    targetMap = JSON.parse(localStorage['targetMap']);
+    var targetMap = JSON.parse(localStorage['targetMap']);
 
     for(var target in targetMap) {
       if (url.match(target)) {
