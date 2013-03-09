@@ -12,12 +12,16 @@ var proxy = {
     });
   },
   getSettingNameForUrl: function(url) {
-    var targetMap = JSON.parse(localStorage['targetMap']);
+    try {
+      var targetMap = JSON.parse(localStorage['targetMap']);
 
-    for(var target in targetMap) {
-      if (url.match(target)) {
-        return targetMap[target];
+      for(var target in targetMap) {
+        if (url.match(target)) {
+          return targetMap[target];
+        }
       }
+    } catch(e) {
+      // no setting
     }
 
     return "system";
